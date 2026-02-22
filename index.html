@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אבני תקווה - המקדש הדיגיטלי</title>
+    
+    <!-- Scripts for Browser Rendering -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&display=swap');
+        
+        body {
+            font-family: 'Assistant', sans-serif;
+            background-color: #010206;
+            margin: 0;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        @keyframes shimmer { 
+            0% { background-position: -200% center; } 
+            100% { background-position: 200% center; } 
+        }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        .gold-text {
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shimmer 4s linear infinite;
+        }
+
+        .luxury-card {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(191, 149, 63, 0.3);
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
+            color: black;
+            font-weight: 800;
+            transition: all 0.3s ease;
+        }
+
+        .btn-gold:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const App = () => {
+            const [count, setCount] = useState(18456);
+            const [activePage, setActivePage] = useState('main');
+            const [dedication, setDedication] = useState('');
+
+            const missions = [
+                { do: "שלחו הודעת הערכה לאדם שמעולם לא הודיתם לו.", dont: "הימנעו מלהעביר ביקורת על אדם אחר היום." },
+                { do: "חייכו לאדם זר או שלחו הודעת 'בוקר טוב' מחזקת.", dont: "נתקלתם במחלוקת? בחרו להיות אלו ששותקים." }
+            ];
+            const todayMission = missions[new Date().getDate() % missions.length];
+
+            const handleDedicate = () => {
+                setCount(prev => prev + 1);
+                setActivePage('success');
+            };
+
+            const Header = () => (
+                <div className="text-center space-y-4 mb-8 pt-4">
+                    <div className="flex items-center justify-center gap-4 opacity-50">
+                        <div className="h-[1px] w-8 bg-amber-400"></div>
+                        <span className="text-[10px] tracking-[0.3em] uppercase text-amber-200">Kodesh Digital</span>
+                        <div className="h-[1px] w-8 bg-amber-400"></div>
+                    </div>
+                    <h1 className="text-5xl font-black italic gold-text tracking-tighter">אבני תקווה</h1>
+                    <p className="text-amber-100/60 text-sm tracking-widest uppercase">בונים את חומות ירושלים ברשת</p>
+                </div>
+            );
+
+            return (
+                <div className="min-h-screen relative p-4 pb-32">
+                    {/* Background Light */}
+                    <div className="fixed inset-0 pointer-events-none">
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-96 bg-amber-500/10 blur-[120px]"></div>
+                    </div>
+
+                    <div className="max-w-md mx-auto relative z-10">
+                        {activePage === 'main' && (
+                            <div className="space-y-6 animate-fade-in">
+                                <Header />
+                                
+                                <div className="luxury-card p-8 text-center space-y-2 border-amber-500/40">
+                                    <p className="text-amber-400/70 text-xs font-bold tracking-widest">אבנים שהונחו עד כה</p>
+                                    <div className="text-7xl font-black tabular-nums">{count.toLocaleString()}</div>
+                                </div>
+
+                                <div className="space-y-3">
+                                    <div className="bg-white/5 border-r-4 border-green-500 p-5 rounded-2xl">
+                                        <p className="text-[10px] text-green-400 font-bold mb-1">משימת היום: עשה טוב</p>
+                                        <p className="font-bold text-lg">{todayMission.do}</p>
+                                    </div>
+                                    <div className="bg-white/5 border-r-4 border-red-500 p-5 rounded-2xl">
+                                        <p className="text-[10px] text-red-400 font-bold mb-1">משימת היום: סור מרע</p>
+                                        <p className="font-bold text-lg">{todayMission.dont}</p>
+                                    </div>
+                                </div>
+
+                                <button 
+                                    onClick={() => setActivePage('dedicate')}
+                                    className="w-full py-6 rounded-[2rem] text-2xl font-black btn-gold shadow-[0_10px_30px_-10px_rgba(191,149,63,0.5)]"
+                                >
+                                    הנחת אבן במקדש
+                                </button>
+                                
+                                <div className="text-center pt-4 opacity-40 text-xs italic">
+                                    "כל המרבה בטהרת הרשת, הרי זה משובח"
+                                </div>
+                            </div>
+                        )}
+
+                        {activePage === 'dedicate' && (
+                            <div className="space-y-6">
+                                <Header />
+                                <div className="luxury-card p-6 space-y-6">
+                                    <h2 className="text-2xl font-bold text-center text-amber-400">מה הטוב שלך היום?</h2>
+                                    <textarea 
+                                        value={dedication}
+                                        onChange={(e) => setDedication(e.target.value)}
+                                        className="w-full h-48 bg-black/40 border border-amber-500/20 rounded-2xl p-4 text-white resize-none outline-none focus:border-amber-500"
+                                        placeholder="הקדש את האבן למען..."
+                                    ></textarea>
+                                    <button onClick={handleDedicate} className="w-full py-5 rounded-xl btn-gold text-xl">אישור והנחה</button>
+                                    <button onClick={() => setActivePage('main')} className="w-full text-white/40 text-sm">ביטול</button>
+                                </div>
+                            </div>
+                        )}
+
+                        {activePage === 'success' && (
+                            <div className="text-center space-y-8 py-12">
+                                <div className="text-9xl animate-bounce">💎</div>
+                                <h2 className="text-5xl font-black gold-text">אשריך!</h2>
+                                <p className="text-xl opacity-80">האבן שלך נוספה לבניין הגאולה הדיגיטלי.</p>
+                                <button 
+                                    onClick={() => {setDedication(''); setActivePage('main');}}
+                                    className="px-12 py-4 border border-amber-500/50 rounded-full text-amber-400 font-bold"
+                                >
+                                    חזרה ללוח המקדש
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Navigation Bar */}
+                    <div className="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-md border-t border-amber-500/20 p-6">
+                        <div className="max-w-md mx-auto flex justify-around items-center">
+                            <div className="flex flex-col items-center opacity-40">
+                                <span className="text-2xl">✨</span>
+                                <span className="text-[8px] tracking-widest mt-1">קהילה</span>
+                            </div>
+                            <div className="flex flex-col items-center">
+                                <span className="text-4xl drop-shadow-[0_0_10px_#bf953f]">🏛️</span>
+                                <span className="text-[10px] tracking-widest mt-1 font-bold text-amber-400">מקדש</span>
+                            </div>
+                            <div className="flex flex-col items-center opacity-40">
+                                <span className="text-2xl">📖</span>
+                                <span className="text-[8px] tracking-widest mt-1">הלכות</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
