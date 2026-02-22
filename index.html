@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>אבני תקווה - המקדש הדיגיטלי</title>
+    <title>אבני תקווה - המקדש הדיגיטלי המלא</title>
     
     <!-- Scripts for Browser Rendering -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&display=swap');
@@ -33,30 +32,46 @@
             to { opacity: 1; transform: translateY(0); } 
         }
 
+        .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+
         .gold-text {
             background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: 200% auto;
             animation: shimmer 4s linear infinite;
+            filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.5));
         }
 
         .luxury-card {
             background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(191, 149, 63, 0.3);
-            border-radius: 2.5rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(25px);
+            border: 2px solid rgba(191, 149, 63, 0.4);
+            border-radius: 3rem;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
         }
 
         .btn-gold {
             background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
             color: black;
-            font-weight: 800;
+            font-weight: 900;
+            box-shadow: 0 10px 40px -10px rgba(191, 149, 63, 0.6);
             transition: all 0.3s ease;
         }
 
-        .btn-gold:active { transform: scale(0.95); }
+        .btn-gold:active { transform: scale(0.96); }
+
+        .nav-text-style {
+            background: linear-gradient(to bottom, #bf953f, #fcf6ba, #b38728);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            letter-spacing: 0.2em;
+        }
+
+        .gold-border-glow {
+            box-shadow: 0 0 20px rgba(184, 134, 11, 0.3), inset 0 0 10px rgba(184, 134, 11, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -72,7 +87,8 @@
 
             const missions = [
                 { do: "שלחו הודעת הערכה לאדם שמעולם לא הודיתם לו.", dont: "הימנעו מלהעביר ביקורת על אדם אחר היום." },
-                { do: "חייכו לאדם זר או שלחו הודעת 'בוקר טוב' מחזקת.", dont: "נתקלתם במחלוקת? בחרו להיות אלו ששותקים." }
+                { do: "חייכו לאדם זר או שלחו הודעת 'בוקר טוב' מחזקת.", dont: "נתקלתם במחלוקת? בחרו להיות אלו ששותקים." },
+                { do: "כתבו תגובה מפרגנת באמת למישהו שמעלה תוכן איכותי.", dont: "אל תפתחו פוסטים שמושכים ללשון הרע או רכילות." }
             ];
             const todayMission = missions[new Date().getDate() % missions.length];
 
@@ -81,111 +97,160 @@
                 setActivePage('success');
             };
 
-            const Header = () => (
-                <div className="text-center space-y-4 mb-8 pt-4">
-                    <div className="flex items-center justify-center gap-4 opacity-50">
-                        <div className="h-[1px] w-8 bg-amber-400"></div>
-                        <span className="text-[10px] tracking-[0.3em] uppercase text-amber-200">Kodesh Digital</span>
-                        <div className="h-[1px] w-8 bg-amber-400"></div>
+            const shareWhatsApp = () => {
+                const text = encodeURIComponent("הנחתי עכשיו אבן במקדש הדיגיטלי! 🏛️✨\nהצטרפו גם אתם לבניית חומות התקווה וטהרת הרשת. יחד נביא את הגאולה! 💎🙌");
+                window.open(`https://wa.me/?text=${text}`, '_blank');
+            };
+
+            const Header = ({ large = false }) => (
+                <div className={`text-center space-y-6 mb-10 animate-fade-in`}>
+                    <div className="flex items-center justify-center gap-6">
+                        <div className="h-[2px] w-16 bg-gradient-to-l from-amber-400 to-transparent"></div>
+                        <span className="text-amber-300 text-[12px] font-black tracking-[0.5em] uppercase drop-shadow-lg">Holy Vessel</span>
+                        <div className="h-[2px] w-16 bg-gradient-to-r from-amber-400 to-transparent"></div>
                     </div>
-                    <h1 className="text-5xl font-black italic gold-text tracking-tighter">אבני תקווה</h1>
-                    <p className="text-amber-100/60 text-sm tracking-widest uppercase">בונים את חומות ירושלים ברשת</p>
+
+                    <div className="relative inline-block">
+                        <h1 className={`${large ? 'text-7xl' : 'text-6xl'} font-black italic tracking-tighter leading-none gold-text`}>
+                            אבני תקווה
+                        </h1>
+                        <div className="absolute -bottom-4 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent blur-[1px]"></div>
+                    </div>
+
+                    <p className="text-amber-100/80 text-xl font-light tracking-[0.25em] pt-4">
+                        והתגדלתי והתקדשתי ונודעתי
+                    </p>
                 </div>
             );
 
             return (
-                <div className="min-h-screen relative p-4 pb-32">
-                    {/* Background Light */}
-                    <div className="fixed inset-0 pointer-events-none">
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-96 bg-amber-500/10 blur-[120px]"></div>
+                <div className="min-h-screen relative p-4 pb-48 pt-10 overflow-x-hidden">
+                    {/* Background Effects */}
+                    <div className="fixed inset-0 pointer-events-none z-0">
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_0%,#b8860b25_0%,transparent_70%)]"></div>
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[50%] bg-[radial-gradient(circle_at_50%_100%,#b8860b15_0%,transparent_70%)]"></div>
                     </div>
 
                     <div className="max-w-md mx-auto relative z-10">
-                        {activePage === 'main' && (
-                            <div className="space-y-6 animate-fade-in">
-                                <Header />
-                                
-                                <div className="luxury-card p-8 text-center space-y-2 border-amber-500/40">
-                                    <p className="text-amber-400/70 text-xs font-bold tracking-widest">אבנים שהונחו עד כה</p>
-                                    <div className="text-7xl font-black tabular-nums">{count.toLocaleString()}</div>
-                                </div>
-
-                                <div className="space-y-3">
-                                    <div className="bg-white/5 border-r-4 border-green-500 p-5 rounded-2xl">
-                                        <p className="text-[10px] text-green-400 font-bold mb-1">משימת היום: עשה טוב</p>
-                                        <p className="font-bold text-lg">{todayMission.do}</p>
+                        <div className="luxury-card p-8 relative overflow-hidden">
+                            
+                            {activePage === 'main' && (
+                                <div className="space-y-12 animate-fade-in">
+                                    <Header large={true} />
+                                    
+                                    <div className="relative group">
+                                        <div className="absolute -inset-1 bg-gradient-to-r from-amber-600 to-amber-300 rounded-[3.1rem] blur opacity-20 transition duration-1000"></div>
+                                        <div className="bg-gradient-to-b from-white/10 to-black/40 border-2 border-amber-500/40 rounded-[3rem] p-10 text-center relative z-10 gold-border-glow">
+                                            <span className="text-amber-400/80 text-[11px] font-black tracking-[0.5em] uppercase mb-3 block">אבני הבניין שנאספו</span>
+                                            <div className="text-8xl font-black text-white tabular-nums drop-shadow-[0_0_30px_rgba(251,191,36,0.6)]">
+                                                {count.toLocaleString()}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="bg-white/5 border-r-4 border-red-500 p-5 rounded-2xl">
-                                        <p className="text-[10px] text-red-400 font-bold mb-1">משימת היום: סור מרע</p>
-                                        <p className="font-bold text-lg">{todayMission.dont}</p>
+
+                                    <div className="space-y-6">
+                                        <div className="bg-white/5 border-2 border-amber-500/20 p-7 rounded-[2.5rem] border-r-[10px] border-r-green-500 shadow-xl">
+                                            <span className="text-green-400 font-black text-[11px] tracking-widest block mb-2 uppercase">בניין • עשו טוב</span>
+                                            <p className="text-2xl font-bold text-white leading-tight">{todayMission.do}</p>
+                                        </div>
+                                        <div className="bg-white/5 border-2 border-amber-500/20 p-7 rounded-[2.5rem] border-r-[10px] border-r-red-600 shadow-xl">
+                                            <span className="text-red-400 font-black text-[11px] tracking-widest block mb-2 uppercase">שמירה • סורו מרע</span>
+                                            <p className="text-2xl font-bold text-white leading-tight">{todayMission.dont}</p>
+                                        </div>
+                                    </div>
+
+                                    <button 
+                                        onClick={() => setActivePage('dedicate')}
+                                        className="w-full py-9 rounded-[2.5rem] text-4xl font-black btn-gold active:scale-95 transition-all"
+                                    >
+                                        הנחת אבן במקדש
+                                    </button>
+
+                                    {/* החלק התחתון שהיה חסר - אמנת טהרת הקודש */}
+                                    <div className="pt-10 border-t-2 border-amber-500/30 space-y-10">
+                                        <div className="text-center space-y-2">
+                                            <h3 className="text-3xl font-black italic text-amber-400 drop-shadow-md">אמנת טהרת הקודש</h3>
+                                            <p className="text-amber-200/40 text-[10px] uppercase tracking-[0.3em]">שמירה מעולה על כבוד האדם והמרחב</p>
+                                        </div>
+
+                                        <div className="space-y-6">
+                                            {[
+                                                { e: "🤐", t: "נדר השתיקה", d: "ראיתם תוכן פוגעני, שיימינג או לשון הרע? אסור בשום אופן לשתף או להגיב. העבירו הלאה מיד." },
+                                                { e: "🛡️", t: "חומת המגן", d: "שמרו על אזניכם ועיניכם מלהקשיב לרכילות. מרחב הרשת הוא מקדש, אל תכניסו אליו טומאה." },
+                                                { e: "💎", t: "יהלומי מילים", d: "השתמשו במקלדת ככלי קודש. רק פרגון, רק הערכה, רק אור. מילה טובה אחת בונה עולם." },
+                                                { e: "🚫", t: "איסור השיימינג", d: "לעולם לא נשתף יד עם מבזי פני חבריהם ברבים. לא בלייק ולא בצפייה. שתיקה היא גבורה." }
+                                            ].map((rule, idx) => (
+                                                <div key={idx} className="bg-gradient-to-l from-white/5 to-transparent p-6 rounded-[2.2rem] flex items-start gap-6 border border-amber-500/10 hover:border-amber-500/40 transition-all">
+                                                    <span className="text-5xl pt-1">{rule.e}</span>
+                                                    <div className="space-y-1">
+                                                        <h4 className="text-amber-400 font-black text-xl">{rule.t}</h4>
+                                                        <p className="text-white/70 text-sm leading-relaxed font-medium">{rule.d}</p>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
+                            )}
 
-                                <button 
-                                    onClick={() => setActivePage('dedicate')}
-                                    className="w-full py-6 rounded-[2rem] text-2xl font-black btn-gold shadow-[0_10px_30px_-10px_rgba(191,149,63,0.5)]"
-                                >
-                                    הנחת אבן במקדש
-                                </button>
-                                
-                                <div className="text-center pt-4 opacity-40 text-xs italic">
-                                    "כל המרבה בטהרת הרשת, הרי זה משובח"
+                            {activePage === 'dedicate' && (
+                                <div className="animate-fade-in space-y-12">
+                                    <Header />
+                                    <div className="text-center space-y-8">
+                                        <h2 className="text-4xl font-black text-amber-400 italic">הקדשה אישית</h2>
+                                        <textarea 
+                                            value={dedication}
+                                            onChange={(e) => setDedication(e.target.value)}
+                                            className="w-full bg-black/80 border-2 border-amber-500/40 rounded-[2.5rem] p-8 text-white text-2xl focus:border-amber-400 outline-none h-80 text-right resize-none shadow-2xl"
+                                            placeholder="כתבו כאן משהו טוב..."
+                                        ></textarea>
+                                        <button onClick={handleDedicate} className="w-full py-8 rounded-[2rem] text-3xl font-black btn-gold active:scale-95 transition-all">אישור והנחה</button>
+                                        <button onClick={() => setActivePage('main')} className="text-amber-200/40 text-xl font-bold">חזרה לדף הראשי</button>
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            )}
 
-                        {activePage === 'dedicate' && (
-                            <div className="space-y-6">
-                                <Header />
-                                <div className="luxury-card p-6 space-y-6">
-                                    <h2 className="text-2xl font-bold text-center text-amber-400">מה הטוב שלך היום?</h2>
-                                    <textarea 
-                                        value={dedication}
-                                        onChange={(e) => setDedication(e.target.value)}
-                                        className="w-full h-48 bg-black/40 border border-amber-500/20 rounded-2xl p-4 text-white resize-none outline-none focus:border-amber-500"
-                                        placeholder="הקדש את האבן למען..."
-                                    ></textarea>
-                                    <button onClick={handleDedicate} className="w-full py-5 rounded-xl btn-gold text-xl">אישור והנחה</button>
-                                    <button onClick={() => setActivePage('main')} className="w-full text-white/40 text-sm">ביטול</button>
+                            {activePage === 'success' && (
+                                <div className="text-center space-y-14 animate-fade-in py-10">
+                                    <Header />
+                                    <div className="text-[12rem] drop-shadow-[0_0_60px_rgba(251,191,36,0.7)] animate-bounce">🏆</div>
+                                    <div className="space-y-4">
+                                        <p className="text-8xl font-black italic gold-text">אשריך!</p>
+                                        <p className="text-3xl text-amber-50 font-black">האבן הונחה במקומה בבניין.</p>
+                                    </div>
+                                    <div className="space-y-6 pt-10">
+                                        <button onClick={shareWhatsApp} className="w-full py-8 rounded-[2.5rem] text-3xl font-black bg-[#25D366] text-white flex items-center justify-center gap-5 shadow-xl active:scale-95 transition-all">
+                                            <span className="text-5xl">📱</span><span>שתפי בווטסאפ</span>
+                                        </button>
+                                        <button onClick={() => {setDedication(''); setActivePage('main');}} className="text-amber-400 font-black text-xl underline underline-offset-[12px] decoration-amber-500/50 block mx-auto pt-6">להנחת אבן נוספת</button>
+                                    </div>
                                 </div>
-                            </div>
-                        )}
-
-                        {activePage === 'success' && (
-                            <div className="text-center space-y-8 py-12">
-                                <div className="text-9xl animate-bounce">💎</div>
-                                <h2 className="text-5xl font-black gold-text">אשריך!</h2>
-                                <p className="text-xl opacity-80">האבן שלך נוספה לבניין הגאולה הדיגיטלי.</p>
-                                <button 
-                                    onClick={() => {setDedication(''); setActivePage('main');}}
-                                    className="px-12 py-4 border border-amber-500/50 rounded-full text-amber-400 font-bold"
-                                >
-                                    חזרה ללוח המקדש
-                                </button>
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Navigation Bar */}
-                    <div className="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-md border-t border-amber-500/20 p-6">
-                        <div className="max-w-md mx-auto flex justify-around items-center">
-                            <div className="flex flex-col items-center opacity-40">
-                                <span className="text-2xl">✨</span>
-                                <span className="text-[8px] tracking-widest mt-1">קהילה</span>
-                            </div>
-                            <div className="flex flex-col items-center">
-                                <span className="text-4xl drop-shadow-[0_0_10px_#bf953f]">🏛️</span>
-                                <span className="text-[10px] tracking-widest mt-1 font-bold text-amber-400">מקדש</span>
-                            </div>
-                            <div className="flex flex-col items-center opacity-40">
-                                <span className="text-2xl">📖</span>
-                                <span className="text-[8px] tracking-widest mt-1">הלכות</span>
-                            </div>
+                            )}
                         </div>
                     </div>
+
+                    {/* Navigation Bar המעודכן עם המילים הקטנות */}
+                    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-3xl border-t border-amber-500/30 px-6 pb-12 pt-8">
+                        <div className="max-w-md mx-auto flex justify-around items-end">
+                            <NavItem icon="✨" label="קהילה" active={activePage === 'community'} onClick={() => setActivePage('community')} size="8px" />
+                            <NavItem icon="🏛️" label="מקדש" active={activePage === 'main'} onClick={() => setActivePage('main')} size="10px" large />
+                            <NavItem icon="📖" label="הלכות" active={activePage === 'halachot'} onClick={() => setActivePage('halachot')} size="8px" />
+                        </div>
+                    </nav>
                 </div>
             );
         };
+
+        const NavItem = ({ icon, label, active, onClick, size, large }) => (
+            <button 
+                onClick={onClick}
+                className={`flex flex-col items-center gap-2 transition-all duration-500 ${active ? 'scale-110' : 'opacity-40'}`}
+            >
+                <span className={`${large ? 'text-7xl' : 'text-5xl'} ${active ? 'drop-shadow-[0_0_20px_rgba(251,191,36,1)]' : ''}`}>{icon}</span>
+                <span className="nav-text-style" style={{ fontSize: size }}>{label.split('').join(' ')}</span>
+                {active && <div className="w-10 h-[2px] bg-amber-400 shadow-[0_0_15px_#fbbf24] mt-1"></div>}
+            </button>
+        );
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
