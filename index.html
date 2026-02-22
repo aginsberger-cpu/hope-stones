@@ -24,7 +24,6 @@
                 radial-gradient(circle at 0% 100%, #b3872822 0%, transparent 30%);
         }
 
-        /* אפקט זהב זז - "נשימת הזהב" */
         .gold-shimmer-text {
             background: linear-gradient(
                 to right, 
@@ -45,7 +44,6 @@
             to { background-position: 200% center; }
         }
 
-        /* מסגרת קריסטלית יוקרתית */
         .crystal-frame {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(35px);
@@ -58,42 +56,15 @@
                 inset 0 0 40px rgba(191, 149, 63, 0.05);
         }
 
-        /* עיטורי פינות בזהב */
-        .corner-accent {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            border: 2px solid #bf953f;
-            pointer-events: none;
-        }
-        .top-left { top: 20px; left: 20px; border-right: 0; border-bottom: 0; border-radius: 10px 0 0 0; }
-        .bottom-right { bottom: 20px; right: 20px; border-left: 0; border-top: 0; border-radius: 0 0 10px 0; }
-
-        /* כפתור מלכותי */
         .royal-button {
             background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
             color: #000;
             font-weight: 800;
             box-shadow: 0 15px 45px rgba(191, 149, 63, 0.4);
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            position: relative;
-            overflow: hidden;
             border: none;
         }
 
-        .royal-button::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
-            transform: rotate(45deg);
-            transition: 0.8s;
-        }
-
-        .royal-button:hover::after { left: 120%; }
         .royal-button:active { transform: scale(0.96); }
 
         .item-card {
@@ -103,17 +74,9 @@
             transition: 0.4s;
         }
 
-        .item-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(191, 149, 63, 0.6);
-            transform: translateY(-2px);
-        }
-
-        /* אייקונים בזהב בוהק */
         .gold-icon {
             filter: drop-shadow(0 0 12px rgba(191, 149, 63, 0.8));
             font-size: 2.8rem;
-            display: inline-block;
         }
 
         .nav-text-style {
@@ -123,10 +86,6 @@
             font-weight: 900;
             letter-spacing: 0.3em;
             font-size: 10px;
-        }
-
-        .active-nav-glow {
-            filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.9));
         }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -143,90 +102,82 @@
             const [page, setPage] = useState('main');
             const [stones, setStones] = useState(18456);
 
+            const handleShare = () => {
+                const text = encodeURIComponent("הנחתי עכשיו אבן במקדש הדיגיטלי! 🏛️✨\nהצטרפו גם אתם לבניית חומות התקווה וטהרת הרשת. יחד נביא את הגאולה! 💎🙌\n" + window.location.href);
+                window.open(`https://wa.me/?text=${text}`, '_blank');
+            };
+
             const Header = () => (
                 <div className="text-center mb-12 fade-in">
                     <div className="flex items-center justify-center gap-6 mb-4">
                         <div className="h-[1.5px] w-20 bg-gradient-to-l from-amber-500 to-transparent"></div>
-                        <span className="text-amber-400 text-[11px] font-black tracking-[0.6em] uppercase drop-shadow-md">Holy Vessel</span>
+                        <span className="text-amber-400 text-[11px] font-black tracking-[0.6em] uppercase">Holy Vessel</span>
                         <div className="h-[1.5px] w-20 bg-gradient-to-r from-amber-500 to-transparent"></div>
                     </div>
                     <h1 className="text-7xl font-black italic gold-shimmer-text tracking-tighter leading-none mb-3">אבני תקווה</h1>
-                    <div className="flex flex-col items-center">
-                        <div className="h-[2px] w-40 bg-gradient-to-r from-transparent via-amber-400 to-transparent mb-4 blur-[0.5px]"></div>
-                        <p className="text-amber-100/60 text-base font-light tracking-[0.4em]">והתגדלתי והתקדשתי ונודעתי</p>
-                    </div>
+                    <p className="text-amber-100/60 text-base font-light tracking-[0.4em]">והתגדלתי והתקדשתי ונודעתי</p>
                 </div>
             );
 
             return (
                 <div className="min-h-screen p-4 pb-48 pt-12 relative">
-                    {/* אפקט עומק לרקע */}
-                    <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_0%,rgba(191,149,63,0.1),transparent_70%)]"></div>
-
                     <div className="max-w-md mx-auto crystal-frame p-9 relative overflow-hidden">
-                        <div className="corner-accent top-left"></div>
-                        <div className="corner-accent bottom-right"></div>
                         
                         {page === 'main' && (
                             <div className="space-y-12 fade-in">
                                 <Header />
                                 
-                                {/* מונה אבנים מלכותי */}
-                                <div className="relative group">
-                                    <div className="absolute -inset-1 bg-amber-500/20 rounded-[3rem] blur-xl group-hover:bg-amber-500/30 transition duration-1000"></div>
-                                    <div className="relative bg-black/60 border-2 border-amber-500/40 p-12 rounded-[2.8rem] text-center shadow-inner overflow-hidden">
-                                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-400/50 to-transparent"></div>
-                                        <span className="text-amber-500 text-[11px] font-black block mb-3 tracking-[0.5em] uppercase">אבני בניין שנאספו</span>
-                                        <div className="text-8xl font-black text-white tracking-tighter drop-shadow-[0_0_30px_rgba(191,149,63,0.5)]">
-                                            {stones.toLocaleString()}
-                                        </div>
+                                {/* מונה אבנים */}
+                                <div className="bg-black/60 border-2 border-amber-500/40 p-12 rounded-[2.8rem] text-center shadow-inner relative overflow-hidden">
+                                    <span className="text-amber-500 text-[11px] font-black block mb-3 tracking-[0.5em] uppercase">אבני בניין שנאספו</span>
+                                    <div className="text-8xl font-black text-white tracking-tighter drop-shadow-[0_0_30px_rgba(191,149,63,0.5)]">
+                                        {stones.toLocaleString()}
                                     </div>
                                 </div>
 
-                                {/* משימות יום בהירות ויוקרתיות */}
+                                {/* משימות יום מורחבות */}
                                 <div className="grid grid-cols-1 gap-5">
                                     <div className="item-card p-7 border-r-[10px] border-r-green-500/60 shadow-xl">
                                         <span className="text-green-400 text-[11px] font-black tracking-widest uppercase block mb-2">עשו טוב • בניין</span>
-                                        <p className="text-2xl font-bold text-white leading-tight">חייכו לאדם זר או שלחו הודעת פרגון מחזקת.</p>
+                                        <p className="text-2xl font-bold text-white leading-tight">שלחו הודעת הערכה לאדם שמעולם לא הודיתם לו.</p>
                                     </div>
                                     <div className="item-card p-7 border-r-[10px] border-r-red-600/60 shadow-xl">
                                         <span className="text-red-400 text-[11px] font-black tracking-widest uppercase block mb-2">סורו מרע • שמירה</span>
-                                        <p className="text-2xl font-bold text-white leading-tight">הימנעו מלהגיב בשיח מעורר מחלוקת או שלילי.</p>
+                                        <p className="text-2xl font-bold text-white leading-tight">נתקלתם במחלוקת בקבוצה? בחרו להיות אלו ששותקים.</p>
                                     </div>
                                 </div>
 
-                                {/* כפתור זהב עוצמתי */}
+                                {/* כפתור שיתוף מהיר */}
+                                <button 
+                                    onClick={handleShare}
+                                    className="w-full py-5 rounded-2xl border border-amber-500/30 bg-amber-500/5 text-amber-200 text-xl font-bold flex items-center justify-center gap-3"
+                                >
+                                    <span>📢</span> הפיצו את הבשורה
+                                </button>
+
+                                {/* כפתור זהב מרכזי */}
                                 <button 
                                     onClick={() => setPage('dedicate')}
-                                    className="w-full py-9 rounded-[2.5rem] text-4xl font-black royal-button shadow-[0_20px_60px_rgba(191,149,63,0.4)]"
+                                    className="w-full py-9 rounded-[2.5rem] text-4xl font-black royal-button"
                                 >
                                     הנחת אבן במקדש
                                 </button>
 
-                                {/* משפט ההפצה */}
-                                <div className="text-center py-8 px-6 border-y-2 border-amber-600/15 relative">
-                                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-1 bg-amber-500/30 rounded-full"></div>
-                                    <p className="text-amber-200 text-2xl font-bold italic leading-relaxed drop-shadow-md">
-                                        "וכל מי שמפרסם לאחרים – <br/>זוכה להיות שותף בבניין הבית"
-                                    </p>
-                                </div>
-
-                                {/* אמנת טהרת הקודש - זהב ואלגנטיות */}
+                                {/* אמנת טהרת הקודש המלאה */}
                                 <div className="space-y-8 pt-6">
                                     <h3 className="text-4xl font-black gold-shimmer-text text-center italic tracking-tight">אמנת טהרת הקודש</h3>
                                     
                                     {[
+                                        { e: "🤐", t: "נדר השתיקה", d: "ראיתם תוכן פוגעני או לשון הרע? אל תגיבו, אל תשתפו ואל תתנו לזה יד. השתיקה היא כוח הבנייה שלנו." },
+                                        { e: "🛡️", t: "חומת המגן", d: "שמרו על אזניכם ועיניכם מלהקשיב לרכילות. מרחב הרשת הוא מקדש, אל תכניסו אליו טומאה." },
                                         { e: "💎", t: "יהלומי מילים", d: "השתמשו במקלדת ככלי קודש. רק פרגון, רק הערכה, רק אור. מילה טובה אחת בונה עולם שלם." },
-                                        { e: "🚫", t: "איסור השיימינג", d: "לעולם לא נשתף יד עם מבזי פני חבריהם ברבים. לא בלייק ולא בצפייה. שתיקה במקום כזה היא גבורה." },
-                                        { e: "🤐", t: "נדר השתיקה", d: "ראיתם פוסט פוגעני? אל תגיבו, אפילו לא כדי להגן. אל תתנו דלק לאש המחלוקת." }
+                                        { e: "🚫", t: "איסור השיימינג", d: "לעולם לא נשתף יד עם מבזי פני חבריהם ברבים. לא בלייק ולא בצפייה. שתיקה במקום כזה היא גבורה." }
                                     ].map((item, i) => (
                                         <div key={i} className="item-card p-7 flex items-start gap-7 shadow-lg">
                                             <div className="gold-icon">{item.e}</div>
                                             <div className="space-y-2">
-                                                <h4 className="text-amber-400 font-black text-2xl drop-shadow-sm">{item.t}</h4>
-                                                <p className="text-white text-[16px] leading-relaxed font-bold opacity-90">
-                                                    {item.d}
-                                                </p>
+                                                <h4 className="text-amber-400 font-black text-2xl">{item.t}</h4>
+                                                <p className="text-white text-[16px] leading-relaxed font-bold opacity-90">{item.d}</p>
                                             </div>
                                         </div>
                                     ))}
@@ -237,14 +188,11 @@
                         {page === 'dedicate' && (
                             <div className="space-y-12 py-8 text-center fade-in">
                                 <Header />
-                                <h2 className="text-5xl font-black text-amber-400 italic drop-shadow-lg">הקדשה אישית</h2>
-                                <div className="relative">
-                                    <textarea 
-                                        className="w-full bg-black/80 border-2 border-amber-600/30 rounded-[3rem] p-10 text-white text-3xl h-80 outline-none focus:border-amber-400 font-bold shadow-2xl resize-none text-right"
-                                        placeholder="כתבו כאן משהו טוב..."
-                                    />
-                                    <div className="absolute top-5 right-10 text-amber-500/30 text-6xl">✍️</div>
-                                </div>
+                                <h2 className="text-5xl font-black text-amber-400 italic">הקדשה אישית</h2>
+                                <textarea 
+                                    className="w-full bg-black/80 border-2 border-amber-600/30 rounded-[3rem] p-10 text-white text-3xl h-80 outline-none focus:border-amber-400 font-bold shadow-2xl resize-none text-right"
+                                    placeholder="מה הטוב שעשיתם היום?..."
+                                />
                                 <div className="space-y-6">
                                     <button 
                                         onClick={() => { setStones(s => s+1); setPage('success'); }}
@@ -252,51 +200,32 @@
                                     >
                                         אישור והנחה
                                     </button>
-                                    <button onClick={() => setPage('main')} className="text-amber-200/50 text-2xl font-bold hover:text-amber-400 transition-colors">ביטול וחזרה</button>
+                                    <button onClick={() => setPage('main')} className="text-amber-200/50 text-2xl font-bold">ביטול</button>
                                 </div>
                             </div>
                         )}
 
                         {page === 'success' && (
                             <div className="text-center space-y-14 py-12 fade-in">
-                                <div className="relative inline-block">
-                                    <div className="absolute inset-0 bg-amber-400/20 blur-[60px] rounded-full animate-pulse"></div>
-                                    <div className="text-[13rem] drop-shadow-[0_0_60px_rgba(191,149,63,0.7)] animate-bounce relative z-10">🏛️</div>
-                                </div>
-                                <div className="space-y-6">
-                                    <h2 className="text-8xl font-black italic gold-shimmer-text tracking-tighter">אשריך!</h2>
-                                    <p className="text-3xl text-amber-50 font-black">האבן שלך הונחה בבניין המקדש.</p>
-                                </div>
+                                <div className="text-[13rem] drop-shadow-[0_0_60px_rgba(191,149,63,0.7)] animate-bounce">🏛️</div>
+                                <h2 className="text-8xl font-black italic gold-shimmer-text">אשריך!</h2>
+                                <p className="text-3xl text-amber-50 font-black">האבן שלך הונחה בבניין המקדש.</p>
                                 <div className="pt-10 space-y-8">
-                                    <button onClick={() => window.open('https://wa.me/?text=' + encodeURIComponent("הנחתי אבן במקדש הדיגיטלי! הצטרפו לבניית חומות התקווה: https://aginsberger-cpu.github.io/hope-stones/"))} className="w-full py-9 rounded-[3rem] bg-[#25D366] text-white text-4xl font-black flex items-center justify-center gap-6 shadow-[0_20px_50px_rgba(37,211,102,0.3)] hover:scale-105 transition-transform active:scale-95">
+                                    <button onClick={handleShare} className="w-full py-9 rounded-[3rem] bg-[#25D366] text-white text-4xl font-black flex items-center justify-center gap-6 shadow-xl">
                                         <span className="text-5xl">📱</span> שתפי בווטסאפ
                                     </button>
-                                    <button onClick={() => setPage('main')} className="text-amber-400 font-black text-2xl underline underline-offset-[12px] decoration-amber-500/50 pt-4 block mx-auto">להנחת אבן נוספת</button>
+                                    <button onClick={() => setPage('main')} className="text-amber-400 font-black text-2xl underline">להנחת אבן נוספת</button>
                                 </div>
                             </div>
                         )}
                     </div>
 
-                    {/* ניווט יוקרתי ומדויק */}
+                    {/* ניווט תחתון */}
                     <nav className="fixed bottom-0 left-0 right-0 bg-black/95 backdrop-blur-3xl border-t-2 border-amber-600/25 px-8 pb-14 pt-10 z-50">
-                        <div className="max-w-md mx-auto flex justify-around items-end relative">
-                            
-                            <button className="flex flex-col items-center gap-3 opacity-40 hover:opacity-100 transition-all duration-500">
-                                <span className="text-5xl">✨</span>
-                                <span className="nav-text-style">ק ה י ל ה</span>
-                            </button>
-
-                            <button onClick={() => setPage('main')} className="flex flex-col items-center gap-4 relative group">
-                                <div className="absolute -top-16 bg-amber-500/20 blur-3xl w-24 h-24 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                <span className={`text-8xl -mt-10 transition-all duration-500 ${page === 'main' ? 'active-nav-glow scale-110' : 'grayscale opacity-30'}`}>🏛️</span>
-                                <span className={`nav-text-style !text-[12px] ${page === 'main' ? 'active-nav-glow' : ''}`}>מ ק ד ש</span>
-                                {page === 'main' && <div className="h-[3px] w-14 bg-amber-400 absolute -bottom-3 blur-[0.5px] shadow-[0_0_15px_#fbbf24]"></div>}
-                            </button>
-
-                            <button className="flex flex-col items-center gap-3 opacity-40 hover:opacity-100 transition-all duration-500">
-                                <span className="text-5xl">📖</span>
-                                <span className="nav-text-style">ה ל כ ו ת</span>
-                            </button>
+                        <div className="max-w-md mx-auto flex justify-around items-end">
+                            <button className="flex flex-col items-center gap-3 opacity-40"><span className="text-5xl">✨</span><span className="nav-text-style">ק ה י ל ה</span></button>
+                            <button onClick={() => setPage('main')} className="flex flex-col items-center gap-4"><span className="text-8xl -mt-10">🏛️</span><span className="nav-text-style">מ ק ד ש</span></button>
+                            <button className="flex flex-col items-center gap-3 opacity-40"><span className="text-5xl">📖</span><span className="nav-text-style">ה ל כ ו ת</span></button>
                         </div>
                     </nav>
                 </div>
